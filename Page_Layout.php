@@ -12,79 +12,32 @@
  */
 class Page_Layout {
 
-    private $layout = 'layout_error.html',
+    private $layout_page = null,
+            $layout_name = null,
             $meta_info = array();
 
-    public function plugins_loaded() {
-
-    }
-
     public function request_url(&$url) {
-
-    }
-
-    public function before_load_content(&$file) {
-
-    }
-
-    public function after_load_content(&$file, &$content) {
-
-    }
-
-    public function before_404_load_content(&$file) {
-
-    }
-
-    public function after_404_load_content(&$file, &$content) {
-
+        $name = preg_replace('/\//', '_', $url);
+        $this->layout_name = $name . '.html';
     }
 
     public function config_loaded(&$settings) {
-
-    }
-
-    public function before_read_file_meta(&$headers) {
-
+        $find_template_file = THEMES_DIR . $settings['theme'] . '/' . $this->layout_name;
+        if (file_exists($find_template_file)):
+            $this->layout_page = $this->layout_name;
+        endif;
     }
 
     public function file_meta(&$meta) {
 
-    }
-
-    public function content_parsed(&$content) {
-
-    }
-
-    public function get_page_data(&$data, $page_meta) {
-
-        //var_dump($page_meta);
-    }
-
-    public function get_pages(&$pages, &$current_page, &$prev_page, &$next_page) {
-
-    }
-
-    public function before_twig_register() {
-
+//        layout page -- overide page meta layout template
+        if (isset($this->layout_page))
+            $meta['layout'] = $this->layout_page;
     }
 
     public function before_render(&$twig_vars, &$twig) {
 
     }
 
-    public function after_render(&$output) {
-
-    }
-
-    public function get_layout($layout = '',$twig_vars = array()) {
-
-        if(empty($twig_vars))
-            return;
-
-        if (!empty($layout) AND file_exists($twig_vars['theme_dir'] . '/' . $layout)):
-            $this->layout = $layout;
-        endif;
-
-    }
 
 }
