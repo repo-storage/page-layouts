@@ -33,7 +33,7 @@ class Page_Layout {
 //        layout page -- overide page meta layout template
         if (isset($this->layout_page))
             $meta['layout'] = $this->layout_page;
-            $meta['template'] = $this->layout_page;
+        
     }
 
     public function before_render(&$twig_vars, &$twig) {
