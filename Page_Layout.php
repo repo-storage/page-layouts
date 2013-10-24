@@ -36,8 +36,9 @@ class Page_Layout {
     }
 
     public function before_render(&$twig_vars, &$twig) {
+        if(!isset($twig_vars['base']))
+        $twig_vars['base'] = 'base.html';
 
     }
-
 
 }
